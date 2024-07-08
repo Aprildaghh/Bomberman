@@ -1,0 +1,15 @@
+unit BombCell;
+
+interface
+
+uses Cell;
+
+type
+  TBombCell = class(TCell)
+    public
+      constructor Create(tIcon: Char; tXCoordinate, tYCoordinate: integer);
+  end;
+
+implementation
+
+end.

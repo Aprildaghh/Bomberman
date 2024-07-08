@@ -1,0 +1,87 @@
+unit MainUnit;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids, GameController, Levels;
+
+type
+
+  TmainForm = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    lblMoveCountLabel: TLabel;
+    lblBombCountLabel: TLabel;
+    lblAliensCountLabel: TLabel;
+    lblPowerUpsLabel: TLabel;
+    sgArea: TStringGrid;
+    procedure mGameAreaKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+    tGameController: TGameController;
+
+  public
+    { Public declarations }
+    procedure DrawGameScreen(tGameArea: CharArray);
+    procedure DrawLevelCompleteScreen;
+    procedure DrawGameStartScreen;
+    procedure DrawDeathScreen;
+  end;
+
+var
+  mainForm: TmainForm;
+
+implementation
+
+{$R *.dfm}
+
+procedure TmainForm.FormCreate(Sender: TObject);
+begin
+  tGameController := TGameController.Create;
+end;
+
+procedure TmainForm.mGameAreaKeyPress(Sender: TObject; var Key: Char);
+begin
+  tGameController.ProcessInput(Key);
+end;
+
+procedure TmainForm.DrawGameScreen(tGameArea: CharArray);
+var
+  tArea   : CharArray;
+  i, j    : integer;
+begin
+  //
+end;
+
+procedure TmainForm.DrawDeathScreen;
+begin
+  //
+end;
+
+procedure TmainForm.DrawGameStartScreen;
+begin
+  //
+end;
+
+procedure TmainForm.DrawLevelCompleteScreen;
+begin
+  //
+end;
+
+end.
+
+{
+There will be 3 panels
+1. Greeting Panel
+  - show 'welcome to the game! press any key to continue'
+2. Game Panel
+  - show game already ready
+3. Next Level Panel
+  - show 'Congrulations! press any key to next level'
+
+* change TStringGrid to TMemo *
+}

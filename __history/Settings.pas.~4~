@@ -1,0 +1,31 @@
+unit Settings;
+
+interface
+
+type
+  TSettings = class (TObject)
+    private
+      tSettings: TSettings;
+      constructor Create;
+    public
+      function GetInstance: TSettings;
+  end;
+
+implementation
+
+{ TSettings }
+
+constructor TSettings.Create;
+begin
+// empty Constructor
+end;
+
+function TSettings.GetInstance : TSettings;
+begin
+  if tSettings = nil then
+    tSettings := TSettings.Create;
+
+  Result := tSettings;
+end;
+
+end.

@@ -1,0 +1,42 @@
+unit GameArea;
+
+interface
+
+uses Vcl.Grids, System.Generics.Collections, Cell;
+
+type
+
+  TGameArea = class (TObject)
+    private
+      tArea: array[0..30, 0..15] of TCell;
+    public
+      procedure ProcessInput(tPressedKey: Char);
+      procedure DrawArea(tStringGrid: TStringGrid);
+      constructor Create;
+  end;
+
+implementation
+
+{ TGameArea }
+
+constructor TGameArea.Create;
+begin
+  inherited Create;
+end;
+
+procedure TGameArea.DrawArea(tStringGrid: TStringGrid);
+var
+  i: Integer;
+  j: Integer;
+begin
+  for i := 0 to 29 do
+    for j := 0 to 14 do
+      tStringGrid.Cells[i, j] := tArea[i, j].Icon;
+end;
+
+procedure TGameArea.ProcessInput(tPressedKey: Char);
+begin
+
+end;
+
+end.

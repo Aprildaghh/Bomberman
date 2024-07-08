@@ -1,0 +1,16 @@
+unit WallCell;
+
+interface
+
+uses Cell
+
+type
+  TWallCell = class(TInterfacedObject, TCell)
+
+  end;
+
+
+
+implementation
+
+end.

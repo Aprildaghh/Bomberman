@@ -1,0 +1,42 @@
+unit Settings;
+
+interface
+
+uses Levels;
+
+type
+
+  TLevelNames (LEVEL_1 = '', LEVEL_2 = '');
+
+  TSettings = class (TObject)
+    private
+      class var tSettings: TSettings;
+      constructor Create;
+    public
+      class function GetInstance            : TSettings;
+      class function GetLevelLayoutFromFile : CharArray;
+  end;
+
+implementation
+
+{ TSettings }
+
+constructor TSettings.Create;
+begin
+// empty Constructor
+end;
+
+class function TSettings.GetInstance : TSettings;
+begin
+  if tSettings = nil then
+    tSettings := TSettings.Create;
+
+  Result := tSettings;
+end;
+
+class function TSettings.GetLevelLayoutFromFile: CharArray;
+begin
+
+end;
+
+end.

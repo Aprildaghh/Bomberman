@@ -1,0 +1,56 @@
+unit LevelStartState;
+
+interface
+
+uses ScreenState;
+
+type
+
+  TLevelStartState = class (TInterfacedObject, TScreenState)
+
+    private
+    tState: TScreenState;
+
+    public
+      procedure LevelStarted(tScreenState: TScreenState);
+      procedure Died(tScreenState: TScreenState);
+      procedure LevelCompleted(tScreenState: TScreenState);
+      function getStateName: string;
+
+      property State: TScreenState read tState write tState;
+
+      constructor Create;
+  end;
+
+implementation
+
+{ TLevelStartState }
+
+uses FailedState, GameState;
+
+constructor TLevelStartState.Create;
+begin
+// empty constructor
+end;
+
+procedure TLevelStartState.Died(tScreenState: TScreenState);
+begin
+// do nothing
+end;
+
+function TLevelStartState.getStateName: string;
+begin
+  Result := 'LevelStartState';
+end;
+
+procedure TLevelStartState.LevelCompleted(tScreenState: TScreenState);
+begin
+// do nothing
+end;
+
+procedure TLevelStartState.LevelStarted(tScreenState: TScreenState);
+begin
+  tScreenState := TGameState.Create;
+end;
+
+end.

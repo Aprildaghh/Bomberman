@@ -1,0 +1,15 @@
+unit EnemyCell;
+
+interface
+
+uses Cell;
+
+type
+  TPowerupCell = class(TCell)
+    public
+      constructor Create(tIcon: Char; tXCoordinate, tYCoordinate: integer);
+  end;
+
+implementation
+
+end.

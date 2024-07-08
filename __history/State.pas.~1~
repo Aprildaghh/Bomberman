@@ -1,0 +1,33 @@
+unit State;
+
+interface
+
+type
+  TState = interface
+    procedure LevelStarted;
+    procedure Died;
+    procedure LevelCompleted;
+  end;
+
+  TLevelStartState = class (TInterfacedObject, TState)
+    procedure LevelStarted;
+    procedure Died;
+    procedure LevelCompleted;
+  end;
+
+  TGameState = class
+    procedure LevelStarted;
+    procedure Died;
+    procedure LevelCompleted;
+  end;
+
+  TFailedState = class
+    procedure LevelStarted;
+    procedure Died;
+    procedure LevelCompleted;
+  end;
+
+
+implementation
+
+end.

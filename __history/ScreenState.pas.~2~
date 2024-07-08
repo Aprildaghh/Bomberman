@@ -1,0 +1,14 @@
+unit ScreenState;
+
+interface
+
+type
+  TState = interface
+    procedure LevelStarted;
+    procedure Died;
+    procedure LevelCompleted;
+  end;
+
+implementation
+
+end.

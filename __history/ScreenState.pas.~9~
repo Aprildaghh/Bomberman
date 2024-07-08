@@ -1,0 +1,16 @@
+unit ScreenState;
+
+interface
+
+type
+  TScreenState = interface
+    procedure LevelStarted(tScreenState: TScreenState);
+    procedure Died(tScreenState: TScreenState);
+    procedure LevelCompleted(tScreenState: TScreenState);
+
+    function getStateName: string;
+  end;
+
+implementation
+
+end.

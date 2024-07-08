@@ -1,0 +1,24 @@
+program Bomberman;
+
+
+
+uses
+  Vcl.Forms,
+  Cell in 'Cell.pas',
+  GameController in 'GameController.pas',
+  Levels in 'Levels.pas',
+  GameView in 'GameView.pas' {mainForm},
+  FailedState in 'FailedState.pas',
+  GameState in 'GameState.pas',
+  LevelStartState in 'LevelStartState.pas',
+  LevelSettings in 'LevelSettings.pas',
+  ScreenState in 'ScreenState.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TmainForm, mainForm);
+  Application.Run;
+end.

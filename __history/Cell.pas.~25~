@@ -1,0 +1,27 @@
+unit Cell;
+
+interface
+
+uses LevelSettings;
+
+type
+
+  CellArray = array[1..30, 1..15] of TCell;
+
+  CellType = (Wall, Empty, Sand, Hero, Bomb, Fire, Exit, Enemy, Powerup);
+
+  TCell = interface
+    private
+      tIcon: Char;
+      tXCoordinate, tYCoordinate: integer;
+      tCellType: CellType;
+    public
+      property Icon: Char read tIcon;
+      property XCoordinate: integer read tXCoordinate write tXCoordinate;
+      property YCoordinate: integer read tYCoordinate write tYCoordinate;
+      constructor Create(tCellType: CellType; tXCoordinate: integer; tYCoordinate: integer);
+  end;
+
+implementation
+
+end.
