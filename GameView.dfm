@@ -4,8 +4,8 @@ object mainForm: TmainForm
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsToolWindow
   Caption = 'Bomberman'
-  ClientHeight = 450
-  ClientWidth = 537
+  ClientHeight = 447
+  ClientWidth = 534
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -121,9 +121,9 @@ object mainForm: TmainForm
     object Label5: TLabel
       Left = 173
       Top = 224
-      Width = 124
+      Width = 204
       Height = 21
-      Caption = 'Click to Continue..'
+      Caption = 'Press any button to continue..'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -157,9 +157,9 @@ object mainForm: TmainForm
     object Label7: TLabel
       Left = 173
       Top = 268
-      Width = 124
+      Width = 204
       Height = 21
-      Caption = 'Click to Continue..'
+      Caption = 'Press any button to continue..'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -177,8 +177,8 @@ object mainForm: TmainForm
     TabOrder = 3
     OnClick = processPanelClick
     object Label8: TLabel
-      Left = 64
-      Top = 123
+      Left = 51
+      Top = 127
       Width = 437
       Height = 45
       Caption = 'YOU COMPLETED THIS LEVEL!'
@@ -191,11 +191,11 @@ object mainForm: TmainForm
       OnClick = processPanelClick
     end
     object Label9: TLabel
-      Left = 173
-      Top = 211
-      Width = 124
+      Left = 157
+      Top = 210
+      Width = 204
       Height = 21
-      Caption = 'Click to Continue..'
+      Caption = 'Press any button to continue..'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16

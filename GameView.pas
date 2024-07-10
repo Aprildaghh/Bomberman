@@ -64,7 +64,6 @@ end;
 
 procedure TmainForm.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  // showmessage('asd');
   gameController.ProcessInput(Key);
 end;
 
@@ -133,9 +132,12 @@ end;
 
 end.
 {
+bomb
+  - observer
 powerup
   - strategy pattern
   - state pattern
+  - observer
 enemy
   - factory pattern
 }

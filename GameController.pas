@@ -117,6 +117,7 @@ begin
     end;
 
   tBombs.Remove(aBomb);
+  // aBomb.Free;
 end;
 
 procedure TGameController.ChangeCell(x, y: integer; aName: string);
@@ -250,11 +251,10 @@ end;
 procedure TGameController.ProcessInput(tPressedKey: Char);
 begin
 
-  if ('TLevelStartState' = tScreenState.ClassName) or
+  if (tScreenState is TLevelStartState ) or
     ('TFailedState' = tScreenState.ClassName) then
   begin
     tScreenState := tScreenState.LevelStarted;
-    showmessage('here');
     tCellLayout := tLevel.GetLevelCellLayout;
     tCharLayout := tLevel.GetLevelCharLayout;
     tMoveLimit := MOVE_LIMIT;
