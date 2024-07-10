@@ -18,7 +18,7 @@ type
       constructor Create(tIcon: Char; tXCoordinate, tYCoordinate: integer);
   end;
 
-  CellArray = array[1..30, 1..15] of TCell;
+  CellArray = array[1..15, 1..30] of TCell;
 
 implementation
 

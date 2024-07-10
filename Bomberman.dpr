@@ -21,7 +21,8 @@ uses
   ExitCell in 'ExitCell.pas',
   HeroCell in 'HeroCell.pas',
   PowerupCell in 'PowerupCell.pas',
-  EnemyCell in 'EnemyCell.pas';
+  EnemyCell in 'EnemyCell.pas',
+  PassedState in 'PassedState.pas';
 
 {$R *.res}
 

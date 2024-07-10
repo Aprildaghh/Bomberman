@@ -12,10 +12,10 @@ type
     tState: TScreenState;
 
     public
-      procedure LevelStarted;
-      procedure Died;
-      procedure LevelCompleted;
-      function getStateName: string;
+      function LevelStarted: TScreenState;
+      function Died: TScreenState;
+      function LevelCompleted: TScreenState;
+      function ClassName: string;
 
       property State: TScreenState read tState write tState;
 
@@ -27,7 +27,7 @@ implementation
 
 { TGameState }
 
-uses FailedState, LevelStartState;
+uses FailedState, LevelStartState, PassedState;
 
 constructor TGameState.Create(var tState: TScreenState);
 begin
@@ -39,24 +39,26 @@ begin
 
 end;
 
-procedure TGameState.Died;
+function TGameState.Died: TScreenState;
 begin
   State := TFailedState.Create(tState);
+  Result := State;
 end;
 
-function TGameState.getStateName: string;
+function TGameState.ClassName: string;
 begin
   Result := 'TGameState';
 end;
 
-procedure TGameState.LevelCompleted;
+function TGameState.LevelCompleted: TScreenState;
 begin
-  State := TLevelStartState.Create(tState);
+  State := TPassedState.Create(tState);
+  Result := State;
 end;
 
-procedure TGameState.LevelStarted;
+function TGameState.LevelStarted: TScreenState;
 begin
-// do nothing
+  // Result := State;
 end;
 
 end.

@@ -2,22 +2,25 @@ unit Levels;
 
 interface
 
-uses Cell, Vcl.Dialogs;
+uses Cell, Vcl.Dialogs, System.SysUtils, HeroCell;
 
 type
 
-  CharArray = array[1..30, 1..15] of Char;
+  Cells = (Bomb);     // add more cells
+  CharArray = array[1..15, 1..30] of Char;
+  HeroCorr = array [0..1] of Integer;
 
   TLevels = class (TObject)
     private
       tLevelCount: integer;
       tLevelLayout: CellArray;
 
-      procedure SetLevelLayout;
+      procedure SetLevelLayoutFromFile;
     public
-      procedure NextLevel;
-
-      function GetLevelLayout: CharArray;
+      function GetLevelCharLayout     : CharArray;
+      function GetLevelCellLayout     : CellArray;
+      function GetNextLevelCellLayout : CellArray;
+      function GetHerosCorr           : HeroCorr;
 
       constructor Create;
   end;
@@ -31,33 +34,54 @@ uses LevelSettings;
 constructor TLevels.Create;
 begin
   tLevelCount := 1;
-  SetLevelLayout;
+  SetLevelLayoutFromFile;
 end;
 
-function TLevels.GetLevelLayout: CharArray;
+function TLevels.GetHerosCorr: HeroCorr;
+var
+  i, j        : Integer;
+  tHeroCorr   : HeroCorr;
+begin
+  for i := 1 to 15 do
+    for j := 1 to 30 do
+    begin
+      if tLevelLayout[i, j].ClassName = THeroCell.ClassName then
+      begin
+        tHeroCorr[0] := i;
+        tHeroCorr[1] := j;
+        Result := tHeroCorr;
+        Exit;
+      end;
+    end
+end;
+
+function TLevels.GetLevelCharLayout: CharArray;
 var
   tLayout   : CharArray;
   i, j      : Integer;
 begin
-  for i := 1 to 30 do
-  begin
-    for j := 1 to 15 do
-    begin
+  for i := 1 to 15 do
+    for j := 1 to 30 do
       tLayout[i, j] := tLevelLayout[i, j].Icon;
-    end;
-  end;
 
   Result := tLayout;
 end;
 
-procedure TLevels.NextLevel;
+function TLevels.GetNextLevelCellLayout: CellArray;
 begin
   // inc(tLevelCount);
   tLevelCount := (tLevelCount mod 2) + 1;
-  SetLevelLayout;
+  SetLevelLayoutFromFile;
+  Result := tLevelLayout;
 end;
 
-procedure TLevels.SetLevelLayout;
+function TLevels.GetLevelCellLayout: CellArray;
+begin
+  SetLevelLayoutFromFile;
+  Result := tLevelLayout;
+end;
+
+procedure TLevels.SetLevelLayoutFromFile;
 var
   tSettings: TLevelSettings;
 begin
@@ -66,3 +90,4 @@ begin
 end;
 
 end.
+

@@ -20,11 +20,22 @@ type
     lblPowerUpsLabel: TLabel;
     pnlGamePanel: TPanel;
     gameMemo: TMemo;
-    procedure mGameAreaKeyPress(Sender: TObject; var Key: Char);
+    pnlWelcomePanel: TPanel;
+    WELCOME: TLabel;
+    Label5: TLabel;
+    pnlDeathPanel: TPanel;
+    Label6: TLabel;
+    Label7: TLabel;
+    pnlLevelCompletePanel: TPanel;
+    Label8: TLabel;
+    Label9: TLabel;
     procedure FormCreate(Sender: TObject);
+    procedure processPanelClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     gameController: TGameController;
+
 
   public
     { Public declarations }
@@ -35,8 +46,11 @@ var
   mainForm: TmainForm;
   procedure DrawGameScreen(tGameArea: CharArray);
   procedure DrawLevelCompleteScreen;
-  procedure DrawGameStartScreen;
   procedure DrawDeathScreen;
+  procedure DrawGreetScreen;
+  procedure HideAllPanels;
+  procedure UpdateMoveLabel(tMovesLeft: integer);
+  procedure UpdateBombLabel(tBombPlanted, tBombLimit: integer);
 implementation
 
 {$R *.dfm}
@@ -44,12 +58,19 @@ implementation
 procedure TmainForm.FormCreate(Sender: TObject);
 begin
   gameController := TGameController.Create;
-  gameController.ProcessInput('k');
+  HideAllPanels;
+  DrawGreetScreen;
 end;
 
-procedure TmainForm.mGameAreaKeyPress(Sender: TObject; var Key: Char);
+procedure TmainForm.FormKeyPress(Sender: TObject; var Key: Char);
 begin
+  // showmessage('asd');
   gameController.ProcessInput(Key);
+end;
+
+procedure TmainForm.processPanelClick(Sender: TObject);
+begin
+  gameController.ProcessInput(' ');
 end;
 
 procedure DrawGameScreen(tGameArea: CharArray);
@@ -58,55 +79,63 @@ var
   j: Integer;
   line: string;
 begin
+  HideAllPanels;
   mainForm.gameMemo.Clear;
   for i := 1 to 15 do
   begin
     line := '';
     for j := 1 to 30 do
     begin
-      line := line + tGameArea[j, i];
+      line := line + tGameArea[i, j];
     end;
     mainForm.gameMemo.Lines.Add(line);
   end;
   mainForm.gameMemo.Refresh;
 
   mainForm.pnlGamePanel.Show;
-  // hide other panels
+end;
+
+procedure HideAllPanels;
+begin
+  mainForm.pnlGamePanel.Hide;
+  mainForm.pnlWelcomePanel.Hide;
+  mainForm.pnlDeathPanel.Hide;
+  mainForm.pnlLevelCompletePanel.Hide;
+end;
+
+procedure DrawGreetScreen;
+begin
+  HideAllPanels;
+  mainForm.pnlWelcomePanel.Show;
 end;
 
 procedure DrawDeathScreen;
 begin
-  //
-end;
-
-procedure DrawGameStartScreen;
-begin
-  //
+  HideAllPanels;
+  mainForm.pnlDeathPanel.Show;
 end;
 
 procedure DrawLevelCompleteScreen;
 begin
-  //
+  HideAllPanels;
+  mainForm.pnlLevelCompletePanel.Show;
+end;
+
+procedure UpdateMoveLabel(tMovesLeft: integer);
+begin
+  mainForm.lblMoveCountLabel.Caption := inttostr(tMovesLeft);
+end;
+
+procedure UpdateBombLabel(tBombPlanted, tBombLimit: integer);
+begin
+  mainForm.lblBombCountLabel.Caption := inttostr(tBombPlanted) + ' / ' + inttostr(tBombLimit);
 end;
 
 end.
-
 {
-* change TStringGrid to TMemo *
-
-There will be 3 panels
-1. Greeting Panel
-  - show 'welcome to the game! press any key to continue'
-2. Game Panel
-  - show game already ready
-3. Next Level Panel
-  - show 'Congrulations! press any key to next level'
-
-
 powerup
   - strategy pattern
   - state pattern
 enemy
   - factory pattern
-
 }

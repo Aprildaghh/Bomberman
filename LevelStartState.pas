@@ -2,7 +2,7 @@ unit LevelStartState;
 
 interface
 
-uses ScreenState;
+uses ScreenState, VCL.Dialogs;
 
 type
 
@@ -12,10 +12,10 @@ type
     tState: TScreenState;
 
     public
-      procedure LevelStarted;
-      procedure Died;
-      procedure LevelCompleted;
-      function getStateName: string;
+      function LevelStarted: TScreenState;
+      function Died: TScreenState;
+      function LevelCompleted: TScreenState;
+      function ClassName: string;
 
       property State: TScreenState read tState write tState;
 
@@ -27,7 +27,7 @@ implementation
 
 { TLevelStartState }
 
-uses FailedState, GameState;
+uses FailedState, GameState, PassedState;
 
 constructor TLevelStartState.Create(var tState: TScreenState);
 begin
@@ -39,24 +39,27 @@ begin
 
 end;
 
-procedure TLevelStartState.Died;
+function TLevelStartState.Died: TScreenState;
 begin
-// do nothing
+  State := TFailedState.Create(tState);
+  Result := State;
 end;
 
-function TLevelStartState.getStateName: string;
+function TLevelStartState.ClassName: string;
 begin
   Result := 'TLevelStartState';
 end;
 
-procedure TLevelStartState.LevelCompleted;
+function TLevelStartState.LevelCompleted: TScreenState;
 begin
-// do nothing
+  State := TPassedState.Create(tState);
+  Result := State;
 end;
 
-procedure TLevelStartState.LevelStarted;
+function TLevelStartState.LevelStarted: TScreenState;
 begin
   State := TGameState.Create(tState);
+  Result := State;
 end;
 
 end.

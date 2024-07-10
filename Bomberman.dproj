@@ -119,6 +119,7 @@
         <DCCReference Include="HeroCell.pas"/>
         <DCCReference Include="PowerupCell.pas"/>
         <DCCReference Include="EnemyCell.pas"/>
+        <DCCReference Include="PassedState.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

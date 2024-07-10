@@ -4,11 +4,10 @@ interface
 
 type
   TScreenState = interface
-    procedure LevelStarted;
-    procedure Died;
-    procedure LevelCompleted;
-
-    function getStateName: string;
+    function LevelStarted: TScreenState;
+    function Died: TScreenState;
+    function LevelCompleted: TScreenState;
+    function ClassName: String;
   end;
 
 implementation

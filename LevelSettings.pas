@@ -18,11 +18,13 @@ type
       class var theInstance     : TLevelSettings;
 
       function CharToCell(tCharacter: Char; tXCoordinate, tYCoordinate: integer): TCell;
+      function GetKeyFromValue(aValue: string): Char;
       procedure ReadCharacters;
       constructor Create;
     public
       class function GetInstance                                  : TLevelSettings;
       function GetLevelLayoutFromFile(tLevelIndex: integer)       : CellArray;
+      function GetCharFromCellType(tCellName: string)             : Char;
   end;
 
 implementation
@@ -52,7 +54,7 @@ begin
   else if tCharacterName = 'hero' then Result := THeroCell.Create(tCharacter, tXCoordinate, tYCoordinate)
   else if tCharacterName = 'powerup' then Result := TPowerupCell.Create(tCharacter, tXCoordinate, tYCoordinate)
   else if tCharacterName = 'sand' then Result := TSandCell.Create(tCharacter, tXCoordinate, tYCoordinate)
-  else Result := TWallCell.Create(tCharacter, tXCoordinate, tYCoordinate);
+  else if tCharacterName = 'wall' then Result := TWallCell.Create(tCharacter, tXCoordinate, tYCoordinate);
 
 end;
 
@@ -71,7 +73,7 @@ begin
       ReadLn(myFile, line);
 
       TLevelSettings.theInstance.tCharacters.Add(
-        Copy(line, 1, line.IndexOf('=')-1),
+        Copy(line, 1, line.IndexOf('=')).ToLower,
         line[Length(line)]
       );
     end;
@@ -81,7 +83,21 @@ end;
 constructor TLevelSettings.Create;
 begin
   tCharacters := TDictionary<String, Char>.Create;
-  
+end;
+
+function TLevelSettings.GetCharFromCellType(tCellName: string): Char;
+begin
+
+  if tCellName = TBombCell.ClassName then Result := GetKeyFromValue('bomb')
+  else if tCellName = TEmptyCell.ClassName then Result := GetKeyFromValue('empty')
+  else if tCellName = TEnemyCell.ClassName then Result := GetKeyFromValue('enemy')
+  else if tCellName = TExitCell.ClassName then Result := GetKeyFromValue('exit')
+  else if tCellName = TFireCell.ClassName then Result := GetKeyFromValue('fire')
+  else if tCellName = THeroCell.ClassName then Result := GetKeyFromValue('hero')
+  else if tCellName = TPowerupCell.ClassName then Result := GetKeyFromValue('powerup')
+  else if tCellName = TSandCell.ClassName then Result := GetKeyFromValue('sand')
+  else if tCellName = TWallCell.ClassName then Result := GetKeyFromValue('wall')
+
 end;
 
 class function TLevelSettings.GetInstance : TLevelSettings;
@@ -92,6 +108,14 @@ begin
     theInstance.ReadCharacters;
   end;
   Result := theInstance;
+end;
+
+function TLevelSettings.GetKeyFromValue(aValue: string): Char;
+var i: integer;
+begin
+  for i := 0 to tCharacters.Keys.Count -1 do
+    if tCharacters.Keys.ToArray[i] = aValue then
+      Result := tCharacters.Values.ToArray[i];
 end;
 
 function TLevelSettings.GetLevelLayoutFromFile(tLevelIndex: integer): CellArray;
@@ -119,7 +143,7 @@ begin
       for i := 1 to 30 do
       begin
         aCell := GetInstance.CharToCell(line[i], tRowCount, i);
-        tResultArray[i, tRowCount] := aCell;
+        tResultArray[tRowCount, i] := aCell;
       end;
 
       inc(tRowCount);
