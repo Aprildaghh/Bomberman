@@ -8,30 +8,22 @@ type
 
   TBombController = class (TObject)
     private
+      tLevel                  : TLevels;
       tBombs                  : TList<TBombCell>;
-      tHeroXCorr, tHeroYCorr  : Integer;
-      tCellLayout             : CellArray;
-      tCharLayout             : CharArray;
 
       const BOMB_LIMIT        : Integer = 2;
 
-      procedure ChangeCell(x, y: integer; aName: string);
       procedure UpdateBombs;
       procedure BombGoBoom(var aBomb: TBombCell);
       procedure ClearLayoutsFromFire;
 
-      function GetBombAtLocation( tXCorr, tYCorr: integer)          : TBombCell;
     public
       procedure PlaceBomb;
-      procedure Update(tHeroXCorr, tHeroYCorr : integer; var tCellLayout: CellArray;
-        var tCharLayout: CharArray);
+      procedure Update;
       procedure PlantBombFromList;
       procedure ClearBombs;
-      procedure UpdateLayouts(tHeroXCorr, tHeroYCorr : integer; var tCellLayout: CellArray;
-        var tCharLayout: CharArray);
 
-      function GetCellLayout: CellArray;
-      function GetCharLayout: CharArray;
+      function GetBombAtLocation( tXCorr, tYCorr: integer)          : TBombCell;
       function GetBombsInformation: string;
       function WasThereABomb( tXCorr, tYCorr: integer)              : boolean;
 
@@ -41,11 +33,6 @@ type
 implementation
 
 { TBombController }
-
-{
-  todo's
-change BombGoBoom bc it's disgusting
-}
 
 uses LevelSettings, EmptyCell, EnemyCell, ExitCell, HeroCell, FireCell,
   PowerupCell, SandCell, WallCell, System.SysUtils, Vcl.Dialogs;
@@ -57,87 +44,68 @@ begin
   tXCorr := aBomb.XCoordinate;
   tYCorr := aBomb.YCoordinate;
 
-  ChangeCell(tXCorr, tYCorr, TFireCell.ClassName);
+  tLevel.ChangeCell(tXCorr, tYCorr, TFireCell.ClassName);
 
   for i := 1 to 2 do
     if tXCorr+i <= 15 then
     begin
-      if (tCellLayout[tXCorr+i, TYCorr].ClassName = TWallCell.ClassName) or
-        (tCellLayout[tXCorr+i, TYCorr].ClassName = TExitCell.ClassName) or
-        (tCellLayout[tXCorr+i, TYCorr].ClassName = TBombCell.ClassName) then break;
-      if (tCellLayout[tXCorr+i, TYCorr].ClassName = TSandCell.ClassName) then
+      if (tLevel.CellNameAt(tXCorr+i, tYCorr) = TWallCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr+i, tYCorr) = TExitCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr+i, tYCorr) = TBombCell.ClassName) then break;
+      if (tLevel.CellNameAt(tXCorr+i, tYCorr) = TSandCell.ClassName) then
       begin
-        ChangeCell(tXCorr+i, tYCorr, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr+i, tYCorr, TFireCell.ClassName);
         break;
       end;
-      ChangeCell(tXCorr+i, tYCorr, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr+i, tYCorr, TFireCell.ClassName);
     end;
 
   for i := 1 to 2 do
     if tXCorr-i > 0 then
     begin
-      if (tCellLayout[tXCorr-i, TYCorr].ClassName = TWallCell.ClassName) or
-        (tCellLayout[tXCorr-i, TYCorr].ClassName = TExitCell.ClassName) or
-        (tCellLayout[tXCorr-i, TYCorr].ClassName = TBombCell.ClassName) then break;
-      if (tCellLayout[tXCorr-i, TYCorr].ClassName = TSandCell.ClassName) then
+      if (tLevel.CellNameAt(tXCorr-i, tYCorr) = TWallCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr-i, tYCorr) = TExitCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr-i, tYCorr) = TBombCell.ClassName) then break;
+      if (tLevel.CellNameAt(tXCorr-i, tYCorr) = TSandCell.ClassName) then
       begin
-        ChangeCell(tXCorr-i, tYCorr, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr-i, tYCorr, TFireCell.ClassName);
         break;
       end;
-      ChangeCell(tXCorr-i, tYCorr, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr-i, tYCorr, TFireCell.ClassName);
 
     end;
 
   for i := 1 to 2 do
     if tYCorr+i <= 30 then
     begin
-      if (tCellLayout[tXCorr, TYCorr+i].ClassName = TWallCell.ClassName) or
-        (tCellLayout[tXCorr, TYCorr+i].ClassName = TExitCell.ClassName) or
-        (tCellLayout[tXCorr, TYCorr+i].ClassName = TBombCell.ClassName) then break;
-      if (tCellLayout[tXCorr, TYCorr+i].ClassName = TSandCell.ClassName) then
+      if (tLevel.CellNameAt(tXCorr, tYCorr+i) = TWallCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr, tYCorr+i) = TExitCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr, tYCorr+i) = TBombCell.ClassName) then break;
+      if (tLevel.CellNameAt(tXCorr, tYCorr+i) = TSandCell.ClassName) then
       begin
-        ChangeCell(tXCorr, tYCorr+i, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr, tYCorr+i, TFireCell.ClassName);
         break;
       end;
-      ChangeCell(tXCorr, tYCorr+i, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr, tYCorr+i, TFireCell.ClassName);
 
     end;
 
   for i := 1 to 2 do
     if tYCorr+i > 0 then
     begin
-      if (tCellLayout[tXCorr, TYCorr-i].ClassName = TWallCell.ClassName) or
-        (tCellLayout[tXCorr, TYCorr-i].ClassName = TExitCell.ClassName) or
-        (tCellLayout[tXCorr, TYCorr-i].ClassName = TBombCell.ClassName) then break;
-      if (tCellLayout[tXCorr, TYCorr-i].ClassName = TSandCell.ClassName) then
+      if (tLevel.CellNameAt(tXCorr, tYCorr-i) = TWallCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr, tYCorr-i) = TExitCell.ClassName) or
+        (tLevel.CellNameAt(tXCorr, tYCorr-i) = TBombCell.ClassName) then break;
+      if (tLevel.CellNameAt(tXCorr, tYCorr-i) = TSandCell.ClassName) then
       begin
-        ChangeCell(tXCorr, tYCorr-i, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr, tYCorr-i, TFireCell.ClassName);
         break;
       end;
-      ChangeCell(tXCorr, tYCorr-i, TFireCell.ClassName);
+        tLevel.ChangeCell(tXCorr, tYCorr-i, TFireCell.ClassName);
     end;
 
   tBombs.Remove(aBomb);
   // aBomb.Free;
-end;
-
-procedure TBombController.ChangeCell(x, y: integer; aName: string);
-var tIcon: Char;
-begin
-  tCellLayout[x, y].Free;
-  tIcon := TLevelSettings.GetInstance.GetCharFromCellType(aName);
-  tCharLayout[x, y] := tIcon;
-
-  if aName = TBombCell.ClassName then tCellLayout[x, y] := TBombCell.Create(tIcon, x, y)
-  else if aName = TEmptyCell.ClassName then tCellLayout[x, y] := TEmptyCell.Create(tIcon, x, y)
-  else if aName = TEnemyCell.ClassName then tCellLayout[x, y] := TEnemyCell.Create(tIcon, x, y)
-  else if aName = TExitCell.ClassName then tCellLayout[x, y] := TExitCell.Create(tIcon, x, y)
-  else if aName = TFireCell.ClassName then tCellLayout[x, y] := TFireCell.Create(tIcon, x, y)
-  else if aName = THeroCell.ClassName then tCellLayout[x, y] := THeroCell.Create(tIcon, x, y)
-  else if aName = TPowerupCell.ClassName then tCellLayout[x, y] := TPowerupCell.Create(tIcon, x, y)
-  else if aName = TSandCell.ClassName then tCellLayout[x, y] := TSandCell.Create(tIcon, x, y)
-  else if aName = TWallCell.ClassName then tCellLayout[x, y] := TWallCell.Create(tIcon, x, y);
-
 end;
 
 procedure TBombController.ClearBombs;
@@ -153,24 +121,17 @@ begin
   // Clear layouts from fire's
   for i := 1 to 15 do
     for j := 1 to 30 do
-      if tCellLayout[i, j].ClassName = TFireCell.ClassName then
+      if tLevel.CellNameAt(i, j) = TFireCell.ClassName then
       begin
-        if WasThereABomb(i, j) then
-        begin
-          tCellLayout[i, j].Free;
-          tCellLayout[i, j] := GetBombAtLocation(i, j);
-          tCharLayout[i, j] := TLevelSettings.GetInstance.GetCharFromCellType(TBombCell.ClassName);
-        end
-        else
-          ChangeCell(i, j, TEmptyCell.ClassName);
-
+        if WasThereABomb(i, j) then tLevel.PlantBomb(i, j, GetBombAtLocation(i, j))
+        else tLevel.ChangeCell(i, j, TEmptyCell.ClassName);
       end;
 end;
 
 constructor TBombController.Create;
 begin
-  if self = nil then showmessage('bomb is nil amman tanrim');
   tBombs := TList<TBombCell>.Create;
+  tLevel := TLevels.GetInstance;
 end;
 
 function TBombController.GetBombAtLocation(tXCorr,
@@ -197,44 +158,27 @@ begin
   Result := inttostr(tBombs.Count) + inttostr(BOMB_LIMIT);
 end;
 
-function TBombController.GetCellLayout: CellArray;
-begin
-  Result := tCellLayout;
-end;
-
-function TBombController.GetCharLayout: CharArray;
-begin
-  Result := tCharLayout;
-end;
-
 procedure TBombController.PlaceBomb;
 var aBomb: TBombCell;
 begin
   if tBombs.Count >= BOMB_LIMIT then Exit;
 
-
   aBomb := TBombCell.Create(
-      TLevelSettings.GetInstance.GetCharFromCellType(TBombCell.ClassName), tHeroXCorr, tHeroYCorr);
+      TLevelSettings.GetInstance.GetCharFromCellType(TBombCell.ClassName), tLevel.HeroX, tLevel.HeroY);
 
   tBombs.Add(aBomb);
 
-  tCellLayout[tHeroXCorr, tHeroYCorr].Free;
-  tCharLayout[tHeroXCorr, tHeroYCorr] := TLevelSettings.GetInstance.GetCharFromCellType(TBombCell.ClassName);
-  tCellLayout[tHeroXCorr, tHeroYCorr] := aBomb;
+  tLevel.ChangeCell(tLevel.HeroX, tLevel.HeroY, TBombCell.ClassName);
 
 end;
 
 procedure TBombController.PlantBombFromList;
 begin
-  tCellLayout[tHeroXCorr, tHeroYCorr] := GetBombAtLocation(tHeroXCorr, tHeroYCorr);
-  tCharLayout[tHeroXCorr, tHeroYCorr] := TLevelSettings.GetInstance.GetCharFromCellType(TBombCell.ClassName);
+  tLevel.PlantBomb(tLevel.HeroX, tLevel.HeroY, GetBombAtLocation(tLevel.HeroX, tLevel.HeroY));
 end;
 
-procedure TBombController.Update(tHeroXCorr, tHeroYCorr : integer; var tCellLayout: CellArray;
-        var tCharLayout: CharArray);
+procedure TBombController.Update;
 begin
-  UpdateLayouts(tHeroXCorr, tHeroYCorr, tCellLayout, tCharLayout);
-
   ClearLayoutsFromFire;
   UpdateBombs;
 end;
@@ -250,24 +194,6 @@ begin
     if tBombs.ToArray[i].BoomTimer <= 0 then
       BombGoBoom(tBombs.ToArray[i]);
   end;
-
-end;
-
-procedure TBombController.UpdateLayouts(tHeroXCorr, tHeroYCorr: integer;
-  var tCellLayout: CellArray; var tCharLayout: CharArray);
-var
-  i: Integer;
-  j: Integer;
-begin
-  self.tHeroXCorr := tHeroXCorr;
-  self.tHeroYCorr := tHeroYCorr;
-  self.tCellLayout := tCellLayout;
-  self.tCharLayout := tCharLayout;
-
-  //
-  //for i := 1 to 15 do
-      //showmessage(tCharLayout[i]);
-
 
 end;
 

@@ -83,10 +83,8 @@ begin
   for i := 1 to 15 do
   begin
     line := '';
-    for j := 1 to 30 do
-    begin
-      line := line + tGameArea[i, j];
-    end;
+    for j := 1 to 30 do line := line + tGameArea[i, j];
+
     mainForm.gameMemo.Lines.Add(line);
   end;
   mainForm.gameMemo.Refresh;

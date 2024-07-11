@@ -121,6 +121,10 @@
         <DCCReference Include="EnemyCell.pas"/>
         <DCCReference Include="PassedState.pas"/>
         <DCCReference Include="BombController.pas"/>
+        <DCCReference Include="BasicEnemy.pas"/>
+        <DCCReference Include="EnemyController.pas"/>
+        <DCCReference Include="EnemyFactory.pas"/>
+        <DCCReference Include="Enemy.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

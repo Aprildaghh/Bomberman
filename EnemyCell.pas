@@ -5,14 +5,14 @@ interface
 uses Cell;
 
 type
-  TEnemyCell = class(TCell)
+  TEnemyCell = class abstract (TCell)
     public
       constructor Create(tIcon: Char; tXCoordinate, tYCoordinate: integer);
   end;
 
 implementation
 
-{ TPowerupCell }
+{ TEnemyCell }
 
 constructor TEnemyCell.Create(tIcon: Char; tXCoordinate,
   tYCoordinate: integer);
