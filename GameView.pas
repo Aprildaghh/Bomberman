@@ -132,12 +132,9 @@ end;
 
 end.
 {
-bomb
-  - observer
 powerup
   - strategy pattern
   - state pattern
-  - observer
 enemy
   - factory pattern
 }

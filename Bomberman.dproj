@@ -120,6 +120,7 @@
         <DCCReference Include="PowerupCell.pas"/>
         <DCCReference Include="EnemyCell.pas"/>
         <DCCReference Include="PassedState.pas"/>
+        <DCCReference Include="BombController.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -4,8 +4,8 @@ object mainForm: TmainForm
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsToolWindow
   Caption = 'Bomberman'
-  ClientHeight = 447
-  ClientWidth = 534
+  ClientHeight = 454
+  ClientWidth = 533
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
