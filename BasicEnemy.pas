@@ -6,10 +6,20 @@ interface
 
   type
     TBasicEnemy = class(TEnemy)
-      // Basic as the name suggests
+
+      public
+
+        constructor Create(XCorr, YCorr: Integer);
     end;
 
 
 implementation
+
+{ TBasicEnemy }
+
+constructor TBasicEnemy.Create(XCorr, YCorr: Integer);
+begin
+  inherited Create(XCorr, YCorr);
+end;
 
 end.

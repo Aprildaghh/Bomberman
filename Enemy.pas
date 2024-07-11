@@ -2,25 +2,22 @@ unit Enemy;
 
 interface
 
-uses EnemyCell;
+uses EnemyCell, Levels;
 
 type
 
-  Direction = (Up, Right, Down, Left);
-
   TEnemy = class abstract (TObject)
     private
-      tXCorr, tYCorr: Integer;
-      tCell         : TEnemyCell;
+      tLevel        : TLevels;
+      cCell         : TEnemyCell;
 
-      procedure MoveEnemy(tDirection: Direction);
-
-      function IsCreateable(XCorr, YCorr: Integer): boolean;
-      function IsMovable(tDirection: Direction)    : boolean;
+      function IsMovable(tDirection: TDirection): boolean;
     public
+      property Cell: TEnemyCell read cCell;
+
       procedure Move;
 
-      constructor Create;
+      constructor Create(XCorr, YCorr: Integer);
   end;
 
 implementation
@@ -29,51 +26,35 @@ implementation
 
 uses LevelSettings;
 
-constructor TEnemy.Create;
-var XCorr, YCorr: Integer;
+constructor TEnemy.Create(XCorr, YCorr: Integer);
 begin
-  while True do
-  begin
-    Randomize;
-    XCorr := random(15)+1;
-    YCorr := random(30)+1;
-    if IsCreateable(XCorr, YCorr) then
-    begin
-      self.tXCorr := XCorr;
-      self.tYCorr := YCorr;
-    end;
-  end;
-  tCell := TEnemyCell.Create(TLevelSettings.GetInstance.GetCharFromCellType(TEnemyCell.ClassName), XCorr, YCorr);
+  tLevel := TLevels.GetInstance;
+  cCell := TEnemyCell.Create(TLevelSettings.GetInstance.GetCharFromCellType(TEnemyCell.ClassName), XCorr, YCorr);
 end;
 
-function TEnemy.IsCreateable(XCorr, YCorr: Integer): boolean;
+function TEnemy.IsMovable(tDirection: TDirection): boolean;
 begin
-
-end;
-
-function TEnemy.IsMovable(tDirection: Direction): boolean;
-begin
-
+  Result := tLevel.IsMovable(self.cCell.XCoordinate,
+    self.cCell.YCoordinate, tDirection);
 end;
 
 procedure TEnemy.Move;
+var direction: TDirection;
 begin
-  Randomize;
 
-  while True do
-  begin
-    case random(4) of
-      0: if IsMovable(Up) then begin MoveEnemy(Up); Exit; end;
-      1: if IsMovable(Right) then begin MoveEnemy(Right); Exit; end;
-      2: if IsMovable(Down) then begin MoveEnemy(Down); Exit; end;
-      3: if IsMovable(Left) then begin MoveEnemy(Left); Exit; end;
+  repeat
+    begin
+      Randomize;
+      direction := TDirection(random(3));
     end;
+    until IsMovable(direction);
+
+  case direction of
+    UP: cCell.XCoordinate := cCell.XCoordinate - 1;
+    RIGHT: cCell.YCoordinate := cCell.YCoordinate + 1;
+    DOWN: cCell.XCoordinate := cCell.XCoordinate + 1;
+    LEFT: cCell.YCoordinate := cCell.YCoordinate - 1;
   end;
-end;
-
-procedure TEnemy.MoveEnemy(tDirection: Direction);
-begin
-
 end;
 
 end.

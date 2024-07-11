@@ -2,18 +2,91 @@ unit EnemyController;
 
 interface
 
-  uses Enemy, BasicEnemy;
+  uses Cell, EnemyCell, FireCell, Enemy, Levels, BasicEnemy, System.Generics.Collections, EnemyFactory;
 
   type
 
     TEnemyController = class (TObject)
       private
+        tLevel        : TLevels;
+        tEnemies      : TList<TEnemy>;
+        fEnemyFactory : TEnemyFactory;
 
+        const ENEMY_COUNT: Integer = 3;
+
+        procedure KillThoseInFire;
+        procedure UpdateLayout;
+        procedure KillEnemy(enemy: TEnemy);
       public
-
+        procedure GenerateEnemies;
+        procedure Update;
+        
+        constructor Create;
     end;
 
 
 implementation
+
+{ TEnemyController }
+
+uses LevelSettings;
+
+constructor TEnemyController.Create;
+begin
+  tLevel := TLevels.GetInstance;
+  fEnemyFactory := TEnemyFactory.Create;
+  tEnemies := TList<TEnemy>.Create;
+end;
+
+procedure TEnemyController.GenerateEnemies;
+var
+  i, x, y: Integer;
+begin
+  for i := 1 to ENEMY_COUNT do
+    tEnemies.Add(fEnemyFactory.ProvideEnemy());
+end;
+
+procedure TEnemyController.KillEnemy(enemy: TEnemy);
+begin
+  tEnemies.Remove(enemy);
+  enemy.Free;
+end;
+
+procedure TEnemyController.KillThoseInFire;
+var
+  i, x, y : Integer;
+  layout  : CellArray;
+begin
+  for i := 0 to tEnemies.Count - 1 do
+  begin
+    x := tEnemies.ToArray[i].Cell.XCoordinate;
+    y := tEnemies.ToArray[i].Cell.YCoordinate;
+    if layout[x, y].ClassName = TFireCell.ClassName then KillEnemy(tEnemies.ToArray[i]);     
+  end;
+end;
+
+procedure TEnemyController.Update;
+var
+  i: Integer;
+  direction: TDirection;    
+begin
+  KillThoseInFire;
+  
+  for i := 0 to tEnemies.Count - 1 do
+    tEnemies.ToArray[i].Move;
+  
+  UpdateLayout;
+  
+end;
+
+procedure TEnemyController.UpdateLayout;
+var
+  i: Integer;
+begin
+  for i := 0 to tEnemies.Count - 1 do
+  begin
+    tLevel.ChangeCell(tEnemies.ToArray[i].Cell.XCoordinate, tEnemies.ToArray[i].Cell.YCoordinate, TEnemyCell.ClassName);
+  end;
+end;
 
 end.

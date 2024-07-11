@@ -126,3 +126,13 @@ begin
 end;
 
 end.
+
+{
+hero -> enemy -> bomb
+
+DONT FORGET
+when the bomb go boom
+don't change the cell bc changing the cell frees the enemy
+if there is an enemy it shouldn't free it bc then I can't read it and kill it
+
+}
