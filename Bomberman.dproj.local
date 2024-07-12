@@ -2,19 +2,33 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2024/07/05 14:27:53.000.419,=C:\Users\abdul\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+<<<<<<< HEAD
     <Transaction>2024/07/05 14:28:43.000.178,C:\Users\abdul\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
     <Transaction>2024/07/05 14:28:43.000.178,C:\Users\abdul\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\abdul\Projects\Bomberman\Unit1.dfm</Transaction>
     <Transaction>2024/07/05 14:29:04.000.688,C:\Users\abdul\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\abdul\Projects\Bomberman\Bomberman.dproj</Transaction>
     <Transaction>2024/07/05 16:38:50.000.091,=C:\Users\abdul\Projects\Bomberman\Cell.pas</Transaction>
     <Transaction>2024/07/05 16:38:50.000.045,=C:\Users\abdul\Projects\Bomberman\Levels.pas</Transaction>
     <Transaction>2024/07/05 16:38:50.000.076,=C:\Users\abdul\Projects\Bomberman\MainUnit.pas</Transaction>
+=======
+    <Transaction>2024/07/05 14:28:43.000.178,C:\Users\abdul\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\abdul\Projects\Bomberman\Unit1.dfm</Transaction>
+    <Transaction>2024/07/05 14:28:43.000.178,C:\Users\abdul\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/05 14:29:04.000.688,C:\Users\abdul\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\abdul\Projects\Bomberman\Bomberman.dproj</Transaction>
+    <Transaction>2024/07/05 16:38:50.000.076,=C:\Users\abdul\Projects\Bomberman\MainUnit.pas</Transaction>
+    <Transaction>2024/07/05 16:38:50.000.091,=C:\Users\abdul\Projects\Bomberman\Cell.pas</Transaction>
+    <Transaction>2024/07/05 16:38:50.000.045,=C:\Users\abdul\Projects\Bomberman\Levels.pas</Transaction>
+>>>>>>> enemy
     <Transaction>2024/07/05 16:38:50.000.123,=C:\Users\abdul\Projects\Bomberman\GameArea.pas</Transaction>
     <Transaction>2024/07/05 16:42:37.000.598,C:\Users\abdul\Projects\Bomberman\Levels.pas=</Transaction>
     <Transaction>2024/07/05 16:42:37.000.598,C:\Users\abdul\Projects\Bomberman\GameArea.pas=</Transaction>
     <Transaction>2024/07/05 16:42:37.000.598,C:\Users\abdul\Projects\Bomberman\MainUnit.pas=</Transaction>
     <Transaction>2024/07/05 16:42:37.000.598,C:\Users\abdul\Projects\Bomberman\Cell.pas=</Transaction>
+<<<<<<< HEAD
     <Transaction>2024/07/05 16:42:50.000.984,=C:\Users\abdul\Projects\Bomberman\MainUnit.pas</Transaction>
     <Transaction>2024/07/05 16:42:50.000.890,=C:\Users\abdul\Projects\Bomberman\GameArea.pas</Transaction>
+=======
+    <Transaction>2024/07/05 16:42:50.000.890,=C:\Users\abdul\Projects\Bomberman\GameArea.pas</Transaction>
+    <Transaction>2024/07/05 16:42:50.000.984,=C:\Users\abdul\Projects\Bomberman\MainUnit.pas</Transaction>
+>>>>>>> enemy
     <Transaction>2024/07/05 16:42:50.000.859,=C:\Users\abdul\Projects\Bomberman\Cell.pas</Transaction>
     <Transaction>2024/07/05 16:42:50.000.906,=C:\Users\abdul\Projects\Bomberman\Levels.pas</Transaction>
     <Transaction>2024/07/05 17:22:51.000.478,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
@@ -23,6 +37,7 @@
     <Transaction>2024/07/08 08:59:07.000.175,C:\Users\abdul\Projects\Bomberman\GameArea.pas=C:\Users\abdul\Projects\Bomberman\GameController.pas</Transaction>
     <Transaction>2024/07/08 09:02:11.000.781,=C:\Users\abdul\Projects\Bomberman\GameState.pas</Transaction>
     <Transaction>2024/07/08 09:02:11.000.843,=C:\Users\abdul\Projects\Bomberman\Settings.pas</Transaction>
+<<<<<<< HEAD
     <Transaction>2024/07/08 09:02:11.000.812,=C:\Users\abdul\Projects\Bomberman\LevelStartState.pas</Transaction>
     <Transaction>2024/07/08 09:02:11.000.875,=C:\Users\abdul\Projects\Bomberman\State.pas</Transaction>
     <Transaction>2024/07/08 09:02:11.000.734,=C:\Users\abdul\Projects\Bomberman\FailedState.pas</Transaction>
@@ -31,6 +46,16 @@
     <Transaction>2024/07/08 10:07:51.000.583,C:\Users\abdul\Projects\Bomberman\LevelSettings.pas=C:\Users\abdul\Projects\Bomberman\Settings.pas</Transaction>
     <Transaction>2024/07/08 10:36:35.000.687,C:\Users\abdul\Projects\Bomberman\GameView.pas=C:\Users\abdul\Projects\Bomberman\MainUnit.pas</Transaction>
     <Transaction>2024/07/08 10:36:35.000.687,C:\Users\abdul\Projects\Bomberman\GameView.dfm=C:\Users\abdul\Projects\Bomberman\MainUnit.dfm</Transaction>
+=======
+    <Transaction>2024/07/08 09:02:11.000.734,=C:\Users\abdul\Projects\Bomberman\FailedState.pas</Transaction>
+    <Transaction>2024/07/08 09:02:11.000.875,=C:\Users\abdul\Projects\Bomberman\State.pas</Transaction>
+    <Transaction>2024/07/08 09:02:11.000.812,=C:\Users\abdul\Projects\Bomberman\LevelStartState.pas</Transaction>
+    <Transaction>2024/07/08 09:02:30.000.347,C:\Users\abdul\Projects\Bomberman\Bomberman.dproj=C:\Users\abdul\Projects\Bomberman\Bomberman.dproj</Transaction>
+    <Transaction>2024/07/08 09:29:23.000.790,C:\Users\abdul\Projects\Bomberman\ScreenState.pas=C:\Users\abdul\Projects\Bomberman\State.pas</Transaction>
+    <Transaction>2024/07/08 10:07:51.000.583,C:\Users\abdul\Projects\Bomberman\LevelSettings.pas=C:\Users\abdul\Projects\Bomberman\Settings.pas</Transaction>
+    <Transaction>2024/07/08 10:36:35.000.687,C:\Users\abdul\Projects\Bomberman\GameView.dfm=C:\Users\abdul\Projects\Bomberman\MainUnit.dfm</Transaction>
+    <Transaction>2024/07/08 10:36:35.000.687,C:\Users\abdul\Projects\Bomberman\GameView.pas=C:\Users\abdul\Projects\Bomberman\MainUnit.pas</Transaction>
+>>>>>>> enemy
     <Transaction>2024/07/08 10:38:29.000.499,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
     <Transaction>2024/07/08 10:39:43.000.860,C:\Users\abdul\Projects\Bomberman\Unit1.pas=C:\Users\abdul\Projects\Bomberman\WallCell.pas</Transaction>
     <Transaction>2024/07/08 10:53:23.000.041,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
@@ -51,5 +76,18 @@
     <Transaction>2024/07/08 10:58:28.000.690,C:\Users\abdul\Projects\Bomberman\Unit1.pas=C:\Users\abdul\Projects\Bomberman\EnemyCell.pas</Transaction>
     <Transaction>2024/07/09 17:22:52.000.374,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
     <Transaction>2024/07/09 17:23:08.000.454,C:\Users\abdul\Projects\Bomberman\Unit1.pas=C:\Users\abdul\Projects\Bomberman\PassedState.pas</Transaction>
+<<<<<<< HEAD
+=======
+    <Transaction>2024/07/10 13:57:57.000.891,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/10 13:58:04.000.924,C:\Users\abdul\Projects\Bomberman\Unit1.pas=C:\Users\abdul\Projects\Bomberman\BombController.pas</Transaction>
+    <Transaction>2024/07/11 08:52:17.000.922,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/11 08:55:00.000.494,C:\Users\abdul\Projects\Bomberman\BasicEnemy.pas=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/11 08:55:11.000.015,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/11 08:55:16.000.694,C:\Users\abdul\Projects\Bomberman\EnemyController.pas=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/11 08:57:44.000.450,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/11 08:57:50.000.328,C:\Users\abdul\Projects\Bomberman\EnemyFactory.pas=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/11 08:59:55.000.140,=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+    <Transaction>2024/07/11 08:59:58.000.654,C:\Users\abdul\Projects\Bomberman\Enemy.pas=C:\Users\abdul\Projects\Bomberman\Unit1.pas</Transaction>
+>>>>>>> enemy
   </Transactions>
 </BorlandProject>

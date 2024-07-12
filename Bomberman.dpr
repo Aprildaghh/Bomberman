@@ -22,7 +22,12 @@ uses
   HeroCell in 'HeroCell.pas',
   PowerupCell in 'PowerupCell.pas',
   EnemyCell in 'EnemyCell.pas',
-  PassedState in 'PassedState.pas';
+  PassedState in 'PassedState.pas',
+  BombController in 'BombController.pas',
+  BasicEnemy in 'BasicEnemy.pas',
+  EnemyController in 'EnemyController.pas',
+  EnemyFactory in 'EnemyFactory.pas',
+  Enemy in 'Enemy.pas';
 
 {$R *.res}
 
