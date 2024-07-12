@@ -51,6 +51,8 @@ var
   procedure HideAllPanels;
   procedure UpdateMoveLabel(tMovesLeft: integer);
   procedure UpdateBombLabel(tBombPlanted, tBombLimit: integer);
+  procedure UpdateEnemyLabel(enemyCount: integer);
+  procedure UpdatePowerupLabel(powers: string);
 implementation
 
 {$R *.dfm}
@@ -128,11 +130,14 @@ begin
   mainForm.lblBombCountLabel.Caption := inttostr(tBombPlanted) + ' / ' + inttostr(tBombLimit);
 end;
 
+procedure UpdateEnemyLabel(enemyCount: integer);
+begin
+  mainForm.lblAliensCountLabel.Caption := inttostr(enemyCount);
+end;
+
+procedure UpdatePowerupLabel(powers: String);
+begin
+  mainForm.lblPowerUpsLabel.Caption := powers;
+end;
+
 end.
-{
-powerup
-  - strategy pattern
-  - state pattern
-enemy
-  - factory pattern
-}

@@ -27,7 +27,12 @@ uses
   BasicEnemy in 'BasicEnemy.pas',
   EnemyController in 'EnemyController.pas',
   EnemyFactory in 'EnemyFactory.pas',
-  Enemy in 'Enemy.pas';
+  Enemy in 'Enemy.pas',
+  Powerup in 'Powerup.pas',
+  PowerupStrategy in 'PowerupStrategy.pas',
+  RunPowerup in 'RunPowerup.pas',
+  ShieldPowerup in 'ShieldPowerup.pas',
+  TooMuchBombPowerup in 'TooMuchBombPowerup.pas';
 
 {$R *.res}
 

@@ -2,7 +2,7 @@ unit Levels;
 
 interface
 
-uses Cell, Vcl.Dialogs, System.SysUtils, BombCell;
+uses Cell, Vcl.Dialogs, System.SysUtils, BombCell, Powerup;
 
 type
 
@@ -16,6 +16,7 @@ type
       tCurrentCellLayout       : CellArray;
       tHeroXCorr, tHeroYCorr   : Integer;
       tMoveLimit               : Integer;
+      cPowerup                 : TPowerup;
 
       const MOVE_LIMIT         : Integer = 200;
 
@@ -29,6 +30,7 @@ type
       property MoveLimit: Integer read tMoveLimit;
       property HeroX: Integer read tHeroXCorr;
       property HeroY: Integer read tHeroYCorr;
+      property Powerup: TPowerup read cPowerup;
 
       procedure StartLevel;
       procedure StartNextLevel;
@@ -36,6 +38,7 @@ type
       procedure MoveHero(tDirection: TDirection; tCurrPlaceBomb, tNextPlaceBomb: TBombCell);
       procedure PlantBomb(x, y: integer; aBombCell: TBombCell);
       procedure ChangeCellWithoutFree(x, y: integer; aName:string);
+      procedure PlacePowerup(x, y: integer);
 
       function CellNameAt(x, y: integer)        : String;
       function GetLevelCharLayout               : CharArray;
@@ -84,6 +87,7 @@ constructor TLevels.Create;
 begin
   tLevelCount := 0;
   SetNextLevelLayoutFromFile;
+  cPowerup := TPowerup.Create;
 end;
 
 procedure TLevels.SetHeroCorr;
@@ -171,6 +175,9 @@ begin
 
   if tCurrentCellLayout[tHeroXCorr, tHeroYCorr].ClassName = TExitCell.ClassName then Exit;
 
+  if tCurrentCellLayout[tHeroXCorr, tHeroYCorr].ClassName = TPowerupCell.ClassName then
+    cPowerup.PowerUp;
+
   if tNextPlaceBomb = nil then
   begin
     tCurrentCellLayout[tHeroXCorr, tHeroYCorr].Free;
@@ -178,6 +185,11 @@ begin
       TLevelSettings.GetInstance.GetCharFromCellType(THeroCell.ClassName), tHeroXCorr, tHeroYCorr);
   end;
 
+end;
+
+procedure TLevels.PlacePowerup(x, y: integer);
+begin
+  ChangeCell(x, y, TPowerupCell.ClassName);
 end;
 
 procedure TLevels.PlantBomb(x, y: integer; aBombCell: TBombCell);

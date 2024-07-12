@@ -4,8 +4,8 @@ object mainForm: TmainForm
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsToolWindow
   Caption = 'Bomberman'
-  ClientHeight = 449
-  ClientWidth = 534
+  ClientHeight = 450
+  ClientWidth = 550
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object mainForm: TmainForm
   object pnlGamePanel: TPanel
     Left = 0
     Top = 0
-    Width = 537
-    Height = 457
+    Width = 550
+    Height = 450
     Caption = 'pnlGamePanel'
     Locked = True
     TabOrder = 0
@@ -52,7 +52,7 @@ object mainForm: TmainForm
       Caption = 'Aliens Count'
     end
     object Label4: TLabel
-      Left = 448
+      Left = 432
       Top = 376
       Width = 53
       Height = 15
@@ -73,14 +73,14 @@ object mainForm: TmainForm
       Caption = '*/*'
     end
     object lblPowerUpsLabel: TLabel
-      Left = 459
+      Left = 432
       Top = 408
       Width = 29
       Height = 15
       Caption = 'None'
     end
     object gameMemo: TMemo
-      Left = 96
+      Left = 112
       Top = 48
       Width = 313
       Height = 289
@@ -99,9 +99,9 @@ object mainForm: TmainForm
   end
   object pnlWelcomePanel: TPanel
     Left = 0
-    Top = 1
-    Width = 537
-    Height = 456
+    Top = 0
+    Width = 550
+    Height = 450
     TabOrder = 1
     OnClick = processPanelClick
     object WELCOME: TLabel
@@ -135,9 +135,9 @@ object mainForm: TmainForm
   end
   object pnlDeathPanel: TPanel
     Left = 0
-    Top = -4
-    Width = 537
-    Height = 456
+    Top = 0
+    Width = 550
+    Height = 450
     TabOrder = 2
     OnClick = processPanelClick
     object Label6: TLabel
@@ -171,9 +171,9 @@ object mainForm: TmainForm
   end
   object pnlLevelCompletePanel: TPanel
     Left = 0
-    Top = 1
-    Width = 537
-    Height = 451
+    Top = 0
+    Width = 550
+    Height = 450
     TabOrder = 3
     OnClick = processPanelClick
     object Label8: TLabel

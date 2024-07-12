@@ -10,8 +10,8 @@ type
     private
       tLevel                  : TLevels;
       tBombs                  : TList<TBombCell>;
-
-      const BOMB_LIMIT        : Integer = 2;
+      tBombLimit              : Integer;
+      tStandardBombLimit      : Integer;
 
       procedure UpdateBombs;
       procedure BombGoBoom(var aBomb: TBombCell);
@@ -19,6 +19,9 @@ type
 
       function PlaceFire(x, y: Integer): boolean;
     public
+      property BombLimit: Integer read tBombLimit write tBombLimit;
+      property StandardBombLimit: Integer read tStandardBombLimit;
+
       procedure PlaceBomb;
       procedure Update;
       procedure PlantBombFromList;
@@ -91,6 +94,8 @@ constructor TBombController.Create;
 begin
   tBombs := TList<TBombCell>.Create;
   tLevel := TLevels.GetInstance;
+  tStandardBombLimit := 2;
+  tBombLimit := tStandardBombLimit;
 end;
 
 function TBombController.GetBombAtLocation(tXCorr,
@@ -114,13 +119,13 @@ end;
 
 function TBombController.GetBombsInformation: string;
 begin
-  Result := inttostr(tBombs.Count) + inttostr(BOMB_LIMIT);
+  Result := inttostr(tBombs.Count) + inttostr(tBombLimit);
 end;
 
 procedure TBombController.PlaceBomb;
 var aBomb: TBombCell;
 begin
-  if tBombs.Count >= BOMB_LIMIT then Exit;
+  if tBombs.Count >= tBombLimit then Exit;
 
   aBomb := TBombCell.Create(
       TLevelSettings.GetInstance.GetCharFromCellType(TBombCell.ClassName), tLevel.HeroX, tLevel.HeroY);
@@ -142,7 +147,11 @@ begin
   end;
   if (tLevel.CellNameAt(x, y) = TSandCell.ClassName) then
   begin
-    tLevel.ChangeCell(x, y, TFireCell.ClassName);
+    randomize;
+    if random(100)+1 < 5 then
+      tLevel.PlacePowerup(x, y)
+    else
+      tLevel.ChangeCell(x, y, TFireCell.ClassName);
     Result := False;
     Exit;
   end;

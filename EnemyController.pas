@@ -21,6 +21,7 @@ interface
         procedure Update;
         procedure ClearEnemies;
 
+        function GetEnemyCount                    : Integer;
         function GetEnemyAtLocation(x, y: integer): TEnemy;
 
         constructor Create;
@@ -73,6 +74,11 @@ begin
 
 end;
 
+function TEnemyController.GetEnemyCount: Integer;
+begin
+  Result := tEnemies.Count;
+end;
+
 procedure TEnemyController.KillEnemy(enemy: TEnemy);
 begin
   tEnemies.Remove(enemy);
@@ -102,7 +108,8 @@ begin
   
   for i := 0 to tEnemies.Count - 1 do
     tEnemies.ToArray[i].Move;
-  
+
+
 end;
 
 end.

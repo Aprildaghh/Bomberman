@@ -17,6 +17,7 @@ type
       procedure UpdateGame(tPressedKey: Char);
       procedure DrawScreen;
       procedure MoveHero(tDirection: TDirection);
+      procedure MoveHeroOneCell(tDirection: TDirection);
 
     public
       procedure ProcessInput(tPressedKey: Char);
@@ -49,6 +50,8 @@ begin
     GameView.UpdateMoveLabel(tLevel.MoveLimit);
     tBombInfo := cBombController.GetBombsInformation;
     GameView.UpdateBombLabel(strtoint(Copy(tBombInfo, 1, 1)), strtoint(Copy(tBombInfo, 2, 1)));
+    GameView.UpdatePowerupLabel(tLevel.Powerup.ToString);
+    GameView.UpdateEnemyLabel(cEnemyController.GetEnemyCount);
     GameView.DrawGameScreen(tLevel.GetLevelCharLayout);
   end
   else if tScreenState is TFailedState then
@@ -93,11 +96,16 @@ begin
     Exit;
   end;
 
-  if tLevel.IsDeathCondition then
+  if (not tLevel.Powerup.IsShieldActive) and (tLevel.IsDeathCondition) then
   begin
     tScreenState := tScreenState.Died;
     Exit;
   end;
+
+  if tLevel.Powerup.IsTooMuchBombActive then
+    cBombController.BombLimit := cBombController.StandardBombLimit + 2
+  else
+    cBombController.BombLimit := cBombController.StandardBombLimit;
 
   case Integer(tPressedKey) of
     Integer('a'): MoveHero(LEFT);
@@ -110,12 +118,29 @@ begin
 end;
 
 procedure TGameController.MoveHero(tDirection: TDirection);
+begin
+
+  if tLevel.Powerup.IsRunActive then
+  begin
+    MoveHeroOneCell(tDirection);
+    MoveHeroOneCell(tDirection);
+  end
+  else
+    MoveHeroOneCell(tDirection);
+
+  cEnemyController.Update;
+  cBombController.Update;
+  tLevel.Powerup.UpdatePowerups;
+
+end;
+
+procedure TGameController.MoveHeroOneCell(tDirection: TDirection);
 var
   tCurrPlaceBomb, tNextPlaceBomb: TBombCell;
 begin
 
   tCurrPlaceBomb := cBombController.GetBombAtLocation(tLevel.HeroX, tLevel.HeroY);
-  
+
   case tDirection of
     UP    : tNextPlaceBomb := cBombController.GetBombAtLocation(tLevel.HeroX-1, tLevel.HeroY);
     DOWN  : tNextPlaceBomb := cBombController.GetBombAtLocation(tLevel.HeroX+1, tLevel.HeroY);
@@ -125,16 +150,9 @@ begin
 
   tLevel.MoveHero(tDirection, tCurrPlaceBomb, tNextPlaceBomb);
 
-  cEnemyController.Update;
-  cBombController.Update;
-
   if tLevel.IsWinCondition then tScreenState.LevelCompleted;
 
 end;
 
+
 end.
-
-{
-hero -> enemy -> bomb
-
-}

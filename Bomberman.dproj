@@ -125,6 +125,11 @@
         <DCCReference Include="EnemyController.pas"/>
         <DCCReference Include="EnemyFactory.pas"/>
         <DCCReference Include="Enemy.pas"/>
+        <DCCReference Include="Powerup.pas"/>
+        <DCCReference Include="PowerupStrategy.pas"/>
+        <DCCReference Include="RunPowerup.pas"/>
+        <DCCReference Include="ShieldPowerup.pas"/>
+        <DCCReference Include="TooMuchBombPowerup.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
