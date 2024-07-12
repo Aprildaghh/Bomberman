@@ -32,6 +32,12 @@ function TEnemyFactory.IsCreateable(XCorr, YCorr: Integer): boolean;
 var isEmpty: boolean;
 begin
   isEmpty := tLevel.CellNameAt(XCorr, YCorr) = TEmptyCell.ClassName;
+  if not isEmpty then
+  begin
+    Result := False;
+    Exit;
+  end;
+
   if tLevel.IsMovable(XCorr, YCorr, Up) or tLevel.IsMovable(XCorr, YCorr, Right)
   or tLevel.IsMovable(XCorr, YCorr, Left) or tLevel.IsMovable(XCorr, YCorr, Down) then
     Result := True and isEmpty

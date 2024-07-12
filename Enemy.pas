@@ -24,7 +24,7 @@ implementation
 
 { TEnemy }
 
-uses LevelSettings;
+uses LevelSettings, EmptyCell, Vcl.Dialogs, BombCell;
 
 constructor TEnemy.Create(XCorr, YCorr: Integer);
 begin
@@ -39,15 +39,23 @@ begin
 end;
 
 procedure TEnemy.Move;
-var direction: TDirection;
+var 
+  direction : TDirection;
+  randNum   : integer;
 begin
 
-  repeat
-    begin
-      Randomize;
-      direction := TDirection(random(3));
-    end;
-    until IsMovable(direction);
+  if tLevel.CellNameAt(cCell.XCoordinate, cCell.YCoordinate) <> TBombCell.ClassName then
+    tLevel.ChangeCell(cCell.XCoordinate, cCell.YCoordinate, TEmptyCell.ClassName);
+
+  Randomize;
+  randNum := random(3);
+  direction := TDirection(randNum);
+
+  while not IsMovable(direction) do
+  begin
+    inc(randNum);
+    direction := TDirection(randNum);
+  end;
 
   case direction of
     UP: cCell.XCoordinate := cCell.XCoordinate - 1;
@@ -55,6 +63,10 @@ begin
     DOWN: cCell.XCoordinate := cCell.XCoordinate + 1;
     LEFT: cCell.YCoordinate := cCell.YCoordinate - 1;
   end;
+
+  if tLevel.CellNameAt(cCell.XCoordinate, cCell.YCoordinate) <> TBombCell.ClassName then
+    tLevel.ChangeCell(cCell.XCoordinate, cCell.YCoordinate, TEnemyCell.ClassName);
+
 end;
 
 end.

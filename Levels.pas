@@ -35,6 +35,7 @@ type
       procedure ChangeCell(x, y: integer; aName: string);
       procedure MoveHero(tDirection: TDirection; tCurrPlaceBomb, tNextPlaceBomb: TBombCell);
       procedure PlantBomb(x, y: integer; aBombCell: TBombCell);
+      procedure ChangeCellWithoutFree(x, y: integer; aName:string);
 
       function CellNameAt(x, y: integer)        : String;
       function GetLevelCharLayout               : CharArray;
@@ -58,10 +59,14 @@ begin
 end;
 
 procedure TLevels.ChangeCell(x, y: integer; aName: string);
-var tIcon: Char;
 begin
   tCurrentCellLayout[x, y].Free;
+  ChangeCellWithoutFree(x, y, aName);
+end;
 
+procedure TLevels.ChangeCellWithoutFree(x, y: integer; aName: string);
+var tIcon: Char;
+begin
   tIcon := TLevelSettings.GetInstance.GetCharFromCellType(aName);
 
   if      aName = TBombCell.ClassName     then tCurrentCellLayout[x, y] := TBombCell.Create(tIcon, x, y)
@@ -116,7 +121,8 @@ end;
 
 function TLevels.IsDeathCondition: boolean;
 begin
-  if (tMoveLimit <= 0) or (tCurrentCellLayout[tHeroXCorr, tHeroYCorr].ClassName = TFireCell.ClassName) then
+  if (tMoveLimit <= 0) or (tCurrentCellLayout[tHeroXCorr, tHeroYCorr].ClassName = TFireCell.ClassName) or
+    (tCurrentCellLayout[tHeroXCorr, tHeroYCorr].ClassName = TEnemyCell.ClassName) then
     Result := True
   else
     Result := False;
@@ -162,6 +168,8 @@ begin
     RIGHT : inc(tHeroYCorr);
     LEFT  : dec(tHeroYCorr);
   end;
+
+  if tCurrentCellLayout[tHeroXCorr, tHeroYCorr].ClassName = TExitCell.ClassName then Exit;
 
   if tNextPlaceBomb = nil then
   begin

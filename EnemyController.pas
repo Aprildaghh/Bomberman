@@ -15,12 +15,14 @@ interface
         const ENEMY_COUNT: Integer = 3;
 
         procedure KillThoseInFire;
-        procedure UpdateLayout;
         procedure KillEnemy(enemy: TEnemy);
       public
         procedure GenerateEnemies;
         procedure Update;
-        
+        procedure ClearEnemies;
+
+        function GetEnemyAtLocation(x, y: integer): TEnemy;
+
         constructor Create;
     end;
 
@@ -29,7 +31,12 @@ implementation
 
 { TEnemyController }
 
-uses LevelSettings;
+uses LevelSettings, Vcl.Dialogs, SYstem.SysUtils;
+
+procedure TEnemyController.ClearEnemies;
+begin
+  tEnemies.Clear;
+end;
 
 constructor TEnemyController.Create;
 begin
@@ -44,11 +51,32 @@ var
 begin
   for i := 1 to ENEMY_COUNT do
     tEnemies.Add(fEnemyFactory.ProvideEnemy());
+
+  for i := 0 to tEnemies.Count - 1 do
+  begin
+    tLevel.ChangeCell(tEnemies.ToArray[i].Cell.XCoordinate,
+      tEnemies.ToArray[i].Cell.YCoordinate, TEnemyCell.ClassName);
+  end;
+end;
+
+function TEnemyController.GetEnemyAtLocation(x, y: integer): TEnemy;
+var
+  i: Integer;
+begin
+  for i := 0 to tEnemies.Count - 1 do
+    if (tEnemies.ToArray[i].Cell.XCoordinate = x) and
+      (tEnemies.ToArray[i].Cell.YCoordinate = y) then
+    begin
+      Result := tEnemies.ToArray[i];
+      Exit;
+    end;
+
 end;
 
 procedure TEnemyController.KillEnemy(enemy: TEnemy);
 begin
   tEnemies.Remove(enemy);
+  enemy.Cell.Free;
   enemy.Free;
 end;
 
@@ -61,32 +89,20 @@ begin
   begin
     x := tEnemies.ToArray[i].Cell.XCoordinate;
     y := tEnemies.ToArray[i].Cell.YCoordinate;
-    if layout[x, y].ClassName = TFireCell.ClassName then KillEnemy(tEnemies.ToArray[i]);     
+    if tLevel.CellNameAt(x, y) = TFireCell.ClassName then KillEnemy(tEnemies.ToArray[i]);
   end;
 end;
 
 procedure TEnemyController.Update;
 var
   i: Integer;
-  direction: TDirection;    
+  direction: TDirection;
 begin
   KillThoseInFire;
   
   for i := 0 to tEnemies.Count - 1 do
     tEnemies.ToArray[i].Move;
   
-  UpdateLayout;
-  
-end;
-
-procedure TEnemyController.UpdateLayout;
-var
-  i: Integer;
-begin
-  for i := 0 to tEnemies.Count - 1 do
-  begin
-    tLevel.ChangeCell(tEnemies.ToArray[i].Cell.XCoordinate, tEnemies.ToArray[i].Cell.YCoordinate, TEnemyCell.ClassName);
-  end;
 end;
 
 end.

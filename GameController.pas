@@ -3,7 +3,7 @@ unit GameController;
 interface
 
 uses System.Generics.Collections, Levels, ScreenState, Vcl.Dialogs, System.UITypes,
-    System.SysUtils, BombController;
+    System.SysUtils, BombController, EnemyController;
 
 type
 
@@ -12,6 +12,7 @@ type
       tScreenState            : TScreenState;
       tLevel                  : TLevels;
       cBombController         : TBombController;
+      cEnemyController        : TEnemyController;
 
       procedure UpdateGame(tPressedKey: Char);
       procedure DrawScreen;
@@ -36,6 +37,7 @@ begin
   tLevel := TLevels.GetInstance;
   tScreenState := TLevelStartState.Create(tScreenState);
   cBombController := TBombController.Create;
+  cEnemyController := TEnemyController.Create;
 end;
 
 procedure TGameController.DrawScreen;
@@ -62,15 +64,19 @@ begin
   if (tScreenState is TLevelStartState ) or
     (tScreenState is TFailedState) then
   begin
+    cEnemyController.ClearEnemies;
     tScreenState := tScreenState.LevelStarted;
     cBombController.ClearBombs;
     tLevel.StartLevel;
+    cEnemyController.GenerateEnemies;
   end
   else if tScreenState is TPassedState then
   begin
+    cEnemyController.ClearEnemies;
     tScreenState := tScreenState.LevelStarted;
-    tLevel.StartNextLevel;
     cBombController.ClearBombs;
+    tLevel.StartNextLevel;
+    cEnemyController.GenerateEnemies;
   end
   else
     UpdateGame(tPressedKey);
@@ -119,6 +125,7 @@ begin
 
   tLevel.MoveHero(tDirection, tCurrPlaceBomb, tNextPlaceBomb);
 
+  cEnemyController.Update;
   cBombController.Update;
 
   if tLevel.IsWinCondition then tScreenState.LevelCompleted;
@@ -129,10 +136,5 @@ end.
 
 {
 hero -> enemy -> bomb
-
-DONT FORGET
-when the bomb go boom
-don't change the cell bc changing the cell frees the enemy
-if there is an enemy it shouldn't free it bc then I can't read it and kill it
 
 }

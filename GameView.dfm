@@ -5,7 +5,7 @@ object mainForm: TmainForm
   BorderStyle = bsToolWindow
   Caption = 'Bomberman'
   ClientHeight = 449
-  ClientWidth = 536
+  ClientWidth = 534
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
