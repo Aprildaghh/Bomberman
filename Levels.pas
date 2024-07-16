@@ -12,7 +12,6 @@ type
   TLevels = class (TObject)
     private
       tLevelCount              : Integer;
-      tStartCellLayout         : CellArray;
       tCurrentCellLayout       : CellArray;
       tHeroXCorr, tHeroYCorr   : Integer;
       tMoveLimit               : Integer;
@@ -32,6 +31,7 @@ type
       property HeroY: Integer read tHeroYCorr;
       property Powerup: TPowerup read cPowerup;
 
+      procedure IncrementMoveLimitByOne;
       procedure StartLevel;
       procedure StartNextLevel;
       procedure ChangeCell(x, y: integer; aName: string);
@@ -123,6 +123,11 @@ begin
   Result := tLayout;
 end;
 
+procedure TLevels.IncrementMoveLimitByOne;
+begin
+  inc(tMoveLimit);
+end;
+
 function TLevels.IsDeathCondition: boolean;
 begin
   if (tMoveLimit <= 0) or (tCurrentCellLayout[tHeroXCorr, tHeroYCorr].ClassName = TFireCell.ClassName) or
@@ -136,6 +141,8 @@ function TLevels.IsMovable(aXFrom, aYFrom: Integer;
   tDirection: TDirection): boolean;
 var aCell: TCell;
 begin
+  aCell := nil;
+
   case tDirection of
     UP: aCell := tCurrentCellLayout[aXFrom-1, aYFrom];
     RIGHT: aCell := tCurrentCellLayout[aXFrom, aYFrom+1];
@@ -156,8 +163,6 @@ begin
 end;
 
 procedure TLevels.MoveHero(tDirection: TDirection; tCurrPlaceBomb, tNextPlaceBomb: TBombCell);
-var
-  i: Integer;
 begin
   if not IsMovable(tHeroXCorr, tHeroYCorr, tDirection) then Exit;
 

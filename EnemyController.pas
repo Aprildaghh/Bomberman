@@ -48,7 +48,7 @@ end;
 
 procedure TEnemyController.GenerateEnemies;
 var
-  i, x, y: Integer;
+  i: Integer;
 begin
   for i := 1 to ENEMY_COUNT do
     tEnemies.Add(fEnemyFactory.ProvideEnemy());
@@ -71,7 +71,7 @@ begin
       Result := tEnemies.ToArray[i];
       Exit;
     end;
-
+  Result := nil;
 end;
 
 function TEnemyController.GetEnemyCount: Integer;
@@ -89,20 +89,22 @@ end;
 procedure TEnemyController.KillThoseInFire;
 var
   i, x, y : Integer;
-  layout  : CellArray;
 begin
   for i := 0 to tEnemies.Count - 1 do
   begin
-    x := tEnemies.ToArray[i].Cell.XCoordinate;
-    y := tEnemies.ToArray[i].Cell.YCoordinate;
-    if tLevel.CellNameAt(x, y) = TFireCell.ClassName then KillEnemy(tEnemies.ToArray[i]);
+    try
+      x := tEnemies.ToArray[i].Cell.XCoordinate;
+      y := tEnemies.ToArray[i].Cell.YCoordinate;
+      if tLevel.CellNameAt(x, y) = TFireCell.ClassName then KillEnemy(tEnemies.ToArray[i]);
+    except
+      on ERangeError do ; // ignore
+    end;
   end;
 end;
 
 procedure TEnemyController.Update;
 var
   i: Integer;
-  direction: TDirection;
 begin
   KillThoseInFire;
   

@@ -122,6 +122,7 @@ begin
 
   if tLevel.Powerup.IsRunActive then
   begin
+    tLevel.IncrementMoveLimitByOne;
     MoveHeroOneCell(tDirection);
     MoveHeroOneCell(tDirection);
   end
@@ -140,6 +141,7 @@ var
 begin
 
   tCurrPlaceBomb := cBombController.GetBombAtLocation(tLevel.HeroX, tLevel.HeroY);
+  tNextPlaceBomb := nil;
 
   case tDirection of
     UP    : tNextPlaceBomb := cBombController.GetBombAtLocation(tLevel.HeroX-1, tLevel.HeroY);

@@ -24,7 +24,7 @@ implementation
 
 { TEnemy }
 
-uses LevelSettings, EmptyCell, Vcl.Dialogs, BombCell;
+uses LevelSettings, EmptyCell, Vcl.Dialogs, BombCell, ExitCell;
 
 constructor TEnemy.Create(XCorr, YCorr: Integer);
 begin
@@ -33,9 +33,19 @@ begin
 end;
 
 function TEnemy.IsMovable(tDirection: TDirection): boolean;
+var isThereExit: boolean;
 begin
+  isThereExit := False;
+
+  case tDirection of
+    UP: if tLevel.CellNameAt(self.cCell.XCoordinate-1, self.cCell.YCoordinate) = TExitCell.ClassName then isThereExit := True;
+    RIGHT: if tLevel.CellNameAt(self.cCell.XCoordinate, self.cCell.YCoordinate+1) = TExitCell.ClassName then isThereExit := True;
+    DOWN: if tLevel.CellNameAt(self.cCell.XCoordinate+1, self.cCell.YCoordinate) = TExitCell.ClassName then isThereExit := True;
+    LEFT: if tLevel.CellNameAt(self.cCell.XCoordinate, self.cCell.YCoordinate-1) = TExitCell.ClassName then isThereExit := True;
+  end;
+
   Result := tLevel.IsMovable(self.cCell.XCoordinate,
-    self.cCell.YCoordinate, tDirection);
+    self.cCell.YCoordinate, tDirection) and not isThereExit;
 end;
 
 procedure TEnemy.Move;
@@ -53,7 +63,7 @@ begin
 
   while not IsMovable(direction) do
   begin
-    inc(randNum);
+    randNum := (randNum+1) mod 4;
     direction := TDirection(randNum);
   end;
 

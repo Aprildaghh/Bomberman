@@ -50,6 +50,7 @@ var
   aEnemy: TEnemy;
   x, y  : Integer;
 begin
+  aEnemy := nil;
 
   repeat
   begin

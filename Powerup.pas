@@ -24,7 +24,7 @@ type
       procedure PowerUp;
       procedure UpdatePowerups;
 
-      function ToString  : String;
+      function ToString  : String; override;
 
       constructor Create;
   end;

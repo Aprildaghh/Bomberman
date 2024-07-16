@@ -54,8 +54,8 @@ begin
   else if tCharacterName = 'hero' then Result := THeroCell.Create(tCharacter, tXCoordinate, tYCoordinate)
   else if tCharacterName = 'powerup' then Result := TPowerupCell.Create(tCharacter, tXCoordinate, tYCoordinate)
   else if tCharacterName = 'sand' then Result := TSandCell.Create(tCharacter, tXCoordinate, tYCoordinate)
-  else if tCharacterName = 'wall' then Result := TWallCell.Create(tCharacter, tXCoordinate, tYCoordinate);
-
+  else if tCharacterName = 'wall' then Result := TWallCell.Create(tCharacter, tXCoordinate, tYCoordinate)
+  else Result := nil;
 end;
 
 procedure TLevelSettings.ReadCharacters;
@@ -97,7 +97,7 @@ begin
   else if tCellName = TPowerupCell.ClassName then Result := GetKeyFromValue('powerup')
   else if tCellName = TSandCell.ClassName then Result := GetKeyFromValue('sand')
   else if tCellName = TWallCell.ClassName then Result := GetKeyFromValue('wall')
-
+  else Result := Char(' ');
 end;
 
 class function TLevelSettings.GetInstance : TLevelSettings;
@@ -115,7 +115,11 @@ var i: integer;
 begin
   for i := 0 to tCharacters.Keys.Count -1 do
     if tCharacters.Keys.ToArray[i] = aValue then
+    begin
       Result := tCharacters.Values.ToArray[i];
+      Exit;
+    end;
+  Result := Char('•');
 end;
 
 function TLevelSettings.GetLevelLayoutFromFile(tLevelIndex: integer): CellArray;
